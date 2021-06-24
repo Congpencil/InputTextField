@@ -4,7 +4,7 @@ The numbers that the user enters in the field are automatically formatted to dis
 
 ## Demo
 
-![Alt text](hhttps://github.com/Congpencil/InputTextField/blob/master/ImageDemo/demo.png "Demo") ![Alt text](https://github.com/Congpencil/InputTextField/blob/master/ImageDemo/demo1.png "Demo1")
+![Alt text](https://github.com/Congpencil/InputTextField/blob/master/ImageDemo/demo.png "Demo") ![Alt text](https://github.com/Congpencil/InputTextField/blob/master/ImageDemo/demo1.png "Demo1")
 
 ## Installation
 
