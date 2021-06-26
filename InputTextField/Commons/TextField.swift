@@ -150,8 +150,9 @@ class TextField: UITextField {
             return
         }
         
-        // remove "đ" from text in textfield
-        inputText.removeAll { $0 == "đ" }
+        // remove symbol from text in textfield
+        let charecterDeleted = Constans.SYMBOL
+        inputText.removeAll(where: { charecterDeleted.contains($0) })
         
         // remove "." from text in textfield
         inputText.removeAll { $0 == "." }
