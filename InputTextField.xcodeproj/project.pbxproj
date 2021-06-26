@@ -16,6 +16,8 @@
 		9DA427BF267AEF92002014A9 /* InputTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA427BE267AEF91002014A9 /* InputTextFieldTests.swift */; };
 		9DA427CA267AEF92002014A9 /* InputTextFieldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA427C9267AEF92002014A9 /* InputTextFieldUITests.swift */; };
 		9DA427D9267AF02E002014A9 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA427D8267AF02E002014A9 /* TextField.swift */; };
+		9DD3560A2686E8550096123D /* Constans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD356092686E8550096123D /* Constans.swift */; };
+		9DD3560E2686F03D0096123D /* UserDefault+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3560D2686F03D0096123D /* UserDefault+Helper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		9DA427C9267AEF92002014A9 /* InputTextFieldUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextFieldUITests.swift; sourceTree = "<group>"; };
 		9DA427CB267AEF92002014A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DA427D8267AF02E002014A9 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		9DD356092686E8550096123D /* Constans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constans.swift; sourceTree = "<group>"; };
+		9DD3560D2686F03D0096123D /* UserDefault+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+Helper.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				9DA427D8267AF02E002014A9 /* TextField.swift */,
+				9DD356092686E8550096123D /* Constans.swift */,
+				9DD3560D2686F03D0096123D /* UserDefault+Helper.swift */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -287,6 +293,8 @@
 			files = (
 				9DA427D9267AF02E002014A9 /* TextField.swift in Sources */,
 				9DA427AC267AEF8A002014A9 /* ViewController.swift in Sources */,
+				9DD3560A2686E8550096123D /* Constans.swift in Sources */,
+				9DD3560E2686F03D0096123D /* UserDefault+Helper.swift in Sources */,
 				9DA427A8267AEF8A002014A9 /* AppDelegate.swift in Sources */,
 				9DA427AA267AEF8A002014A9 /* SceneDelegate.swift in Sources */,
 			);
