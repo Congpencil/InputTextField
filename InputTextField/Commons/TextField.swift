@@ -8,6 +8,42 @@
 import Foundation
 import UIKit
 
+// MARK: - Define
+private enum TitleButton {
+    case buttonOne
+    case buttonTwo
+    case buttonThree
+    
+    var setTitileButton: String {
+        switch self {
+        case .buttonOne:
+            if let listSuggest = UserDefaultHelper.suggestions {
+                let index = 0
+                if listSuggest.count > 0 && index < listSuggest.count {
+                    return listSuggest[index]
+                }
+            }
+        case .buttonTwo:
+            if let listSuggest = UserDefaultHelper.suggestions {
+                let index = 1
+                if listSuggest.count > 1 && index < listSuggest.count
+                {
+                    return listSuggest[index]
+                }
+            }
+        case .buttonThree:
+            if let listSuggest = UserDefaultHelper.suggestions {
+                let index = 2
+                if listSuggest.count > 2 && index < listSuggest.count {
+                    return listSuggest[index]
+                }
+            }
+        }
+        return ""
+    }
+}
+
+// MARK: - UITextField
 class TextField: UITextField {
     
     private let viewSuggest: UIView = {
@@ -25,26 +61,29 @@ class TextField: UITextField {
     }()
     
     private let button1: UIButton = {
+        let title: TitleButton = .buttonOne
         let button = UIButton()
         button.backgroundColor = .gray
-        button.setTitle("100.000", for: .normal)
-        button.layer.cornerRadius = 5
+        button.setTitle(title.setTitileButton, for: .normal)
+        button.layer.cornerRadius = Constans.BUTTON_CORNER_RADIUS
         return button
     }()
     
     private let button2: UIButton = {
+        let title: TitleButton = .buttonTwo
         let button = UIButton()
         button.backgroundColor = .gray
-        button.setTitle("300.000", for: .normal)
-        button.layer.cornerRadius = 5
+        button.setTitle(title.setTitileButton, for: .normal)
+        button.layer.cornerRadius = Constans.BUTTON_CORNER_RADIUS
         return button
     }()
     
     private let button3: UIButton = {
+        let title: TitleButton = .buttonThree
         let button = UIButton()
         button.backgroundColor = .gray
-        button.setTitle("500.000", for: .normal)
-        button.layer.cornerRadius = 5
+        button.setTitle(title.setTitileButton, for: .normal)
+        button.layer.cornerRadius = Constans.BUTTON_CORNER_RADIUS
         return button
     }()
     
@@ -53,6 +92,7 @@ class TextField: UITextField {
         makeUI()
         commonInit()
         addViewSuggest()
+        saveListSuggest()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -60,8 +100,14 @@ class TextField: UITextField {
         makeUI()
         commonInit()
         addViewSuggest()
+        saveListSuggest()
     }
-
+    
+    /// Init Data
+    private func saveListSuggest() {
+        UserDefaultHelper.suggestions = ["100.000", "300.000", "500.000"]
+    }
+    
     private func makeUI() {
         translatesAutoresizingMaskIntoConstraints = false
         keyboardType = .numberPad
@@ -114,8 +160,9 @@ class TextField: UITextField {
             return
         }
         
-        // remove "đ" from text in textfield
-        inputText.removeAll { $0 == "đ" }
+        // remove symbol from text in textfield
+        let charecterDeleted = Constans.SYMBOL
+        inputText.removeAll(where: { charecterDeleted.contains($0) })
         
         // remove "." from text in textfield
         inputText.removeAll { $0 == "." }
@@ -128,15 +175,18 @@ class TextField: UITextField {
             self.text = formatCurrency(amountString)
         }
         
+        // move the mouse to the position
         if let newPosition = self.position(from: self.endOfDocument, offset: -2) {
             self.selectedTextRange = self.textRange(from: newPosition, to: newPosition)
         }
         
+        // get value between 1 and 3 of input text and set for title button
         if inputText.count > 0 && inputText.count < 4 {
             guard let inputText = Int(inputText) else {
                 return
             }
             
+            // format to decima
             let amountInput1 = df2so(inputText * 1000)
             let amountInput2 = df2so(inputText * 10000)
             let amountInput3 = df2so(inputText * 100000)
@@ -147,6 +197,7 @@ class TextField: UITextField {
         }
     }
     
+    /// Set curren title for button
     @objc private func buttonAction(_ button: UIButton) {
         switch button {
         case button1:
@@ -186,11 +237,11 @@ class TextField: UITextField {
     /// - Parameter inputNumber: ext in textfield as Int
     /// - Parameter symbol: defaufl character  = "đ"
     /// - Returns: type currency
-    private func formatCurrency(_ inputNumber: Int, symbol: String = "đ") -> String {
+    private func formatCurrency(_ inputNumber: Int) -> String {
         let formatter = NumberFormatter()
-        formatter.currencySymbol = symbol
+        formatter.currencySymbol = Constans.SYMBOL
         formatter.currencyGroupingSeparator = "."
-        formatter.locale = Locale(identifier: "vn_VN")
+        formatter.locale = Locale(identifier: Constans.PRICE_LOCATION)
         formatter.positiveFormat = "#,##0 ¤"
         formatter.numberStyle = .currency
         return formatter.string(from: inputNumber as NSNumber)!
