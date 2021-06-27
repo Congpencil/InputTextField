@@ -18,15 +18,25 @@ private enum TitleButton {
         switch self {
         case .buttonOne:
             if let listSuggest = UserDefaultHelper.suggestions {
-                return listSuggest[0]
+                let index = 0
+                if listSuggest.count > 0 && index < listSuggest.count {
+                    return listSuggest[index]
+                }
             }
         case .buttonTwo:
             if let listSuggest = UserDefaultHelper.suggestions {
-                return listSuggest[1]
+                let index = 1
+                if listSuggest.count > 1 && index < listSuggest.count
+                {
+                    return listSuggest[index]
+                }
             }
         case .buttonThree:
             if let listSuggest = UserDefaultHelper.suggestions {
-                return listSuggest[2]
+                let index = 2
+                if listSuggest.count > 2 && index < listSuggest.count {
+                    return listSuggest[index]
+                }
             }
         }
         return ""
@@ -165,15 +175,18 @@ class TextField: UITextField {
             self.text = formatCurrency(amountString)
         }
         
+        // move the mouse to the position
         if let newPosition = self.position(from: self.endOfDocument, offset: -2) {
             self.selectedTextRange = self.textRange(from: newPosition, to: newPosition)
         }
         
+        // get value between 1 and 3 of input text and set for title button
         if inputText.count > 0 && inputText.count < 4 {
             guard let inputText = Int(inputText) else {
                 return
             }
             
+            // format to decima
             let amountInput1 = df2so(inputText * 1000)
             let amountInput2 = df2so(inputText * 10000)
             let amountInput3 = df2so(inputText * 100000)
@@ -184,6 +197,7 @@ class TextField: UITextField {
         }
     }
     
+    /// Set curren title for button
     @objc private func buttonAction(_ button: UIButton) {
         switch button {
         case button1:
