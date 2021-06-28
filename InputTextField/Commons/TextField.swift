@@ -26,8 +26,7 @@ private enum TitleButton {
         case .buttonTwo:
             if let listSuggest = UserDefaultHelper.suggestions {
                 let index = 1
-                if listSuggest.count > 1 && index < listSuggest.count
-                {
+                if listSuggest.count > 1 && index < listSuggest.count {
                     return listSuggest[index]
                 }
             }
@@ -65,7 +64,7 @@ class TextField: UITextField {
         let button = UIButton()
         button.backgroundColor = .gray
         button.setTitle(title.setTitileButton, for: .normal)
-        button.layer.cornerRadius = Constans.BUTTON_CORNER_RADIUS
+        button.layer.cornerRadius = Constant.BUTTON_CORNER_RADIUS
         return button
     }()
     
@@ -74,7 +73,7 @@ class TextField: UITextField {
         let button = UIButton()
         button.backgroundColor = .gray
         button.setTitle(title.setTitileButton, for: .normal)
-        button.layer.cornerRadius = Constans.BUTTON_CORNER_RADIUS
+        button.layer.cornerRadius = Constant.BUTTON_CORNER_RADIUS
         return button
     }()
     
@@ -83,7 +82,7 @@ class TextField: UITextField {
         let button = UIButton()
         button.backgroundColor = .gray
         button.setTitle(title.setTitileButton, for: .normal)
-        button.layer.cornerRadius = Constans.BUTTON_CORNER_RADIUS
+        button.layer.cornerRadius = Constant.BUTTON_CORNER_RADIUS
         return button
     }()
     
@@ -91,16 +90,61 @@ class TextField: UITextField {
         super.init(frame: frame)
         makeUI()
         commonInit()
-        addViewSuggest()
         saveListSuggest()
+        addViewSuggest()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         makeUI()
         commonInit()
-        addViewSuggest()
         saveListSuggest()
+        addViewSuggest()
+    }
+    
+    /// Set background for buttons
+    /// - Parameter backgroudColor: backgroudColor for button
+    public func setButtonBackGroundColor(backgroudColor: UIColor) {
+        self.button1.backgroundColor = backgroudColor
+        self.button2.backgroundColor = backgroudColor
+        self.button3.backgroundColor = backgroudColor
+        self.buttonNeedDisplay()
+    }
+    
+    /// Set corner Radius for buttons
+    /// - Parameter cornerRadius: cornerRadius for buttons
+    public func setButtonCornerRadius(cornerRadius: CGFloat) {
+        self.button1.layer.cornerRadius = cornerRadius
+        self.button2.layer.cornerRadius = cornerRadius
+        self.button3.layer.cornerRadius = cornerRadius
+        self.buttonNeedDisplay()
+    }
+        
+    private func buttonNeedDisplay() {
+        self.button1.setNeedsDisplay()
+        self.button2.setNeedsDisplay()
+        self.button3.setNeedsDisplay()
+    }
+    
+    
+    /// Get text in texfield convert to int
+    /// - Returns: interger
+    public func getAmount() -> String {
+        guard var inputText = self.text else {
+            return ""
+        }
+        
+        // remove symbol from text in textfield
+        let charecterDeleted = Constant.SYMBOL
+        inputText.removeAll(where: { charecterDeleted.contains($0) })
+        
+        // remove "." from text in textfield
+        inputText.removeAll { $0 == "." }
+        
+        // remove space from text in textfield
+        inputText.removeAll { $0 == " " }
+        
+        return inputText
     }
     
     /// Init Data
@@ -156,28 +200,18 @@ class TextField: UITextField {
     }
     
     @objc private func textDidChange() {
-        guard var inputText = self.text else {
-            return
-        }
-        
-        // remove symbol from text in textfield
-        let charecterDeleted = Constans.SYMBOL
-        inputText.removeAll(where: { charecterDeleted.contains($0) })
-        
-        // remove "." from text in textfield
-        inputText.removeAll { $0 == "." }
-        
-        // remove space from text in textfield
-        inputText.removeAll { $0 == " " }
-
-        // format currency text in textfield
-        if let amountString = Int(inputText) {
-            self.text = formatCurrency(amountString)
+        let inputText = getAmount()
+        if let inputText = Int(inputText) {
+            self.text = formatCurrency(inputText)
         }
         
         // move the mouse to the position
         if let newPosition = self.position(from: self.endOfDocument, offset: -2) {
             self.selectedTextRange = self.textRange(from: newPosition, to: newPosition)
+        }
+        
+        guard let inputText = self.text else {
+            return
         }
         
         // get value between 1 and 3 of input text and set for title button
@@ -239,9 +273,9 @@ class TextField: UITextField {
     /// - Returns: type currency
     private func formatCurrency(_ inputNumber: Int) -> String {
         let formatter = NumberFormatter()
-        formatter.currencySymbol = Constans.SYMBOL
+        formatter.currencySymbol = Constant.SYMBOL
         formatter.currencyGroupingSeparator = "."
-        formatter.locale = Locale(identifier: Constans.PRICE_LOCATION)
+        formatter.locale = Locale(identifier: Constant.PRICE_LOCATION)
         formatter.positiveFormat = "#,##0 ¤"
         formatter.numberStyle = .currency
         return formatter.string(from: inputNumber as NSNumber)!

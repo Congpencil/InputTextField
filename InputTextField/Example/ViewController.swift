@@ -14,6 +14,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         textField.delegate = self
+        textField.setButtonCornerRadius(cornerRadius: 10)
+        textField.setButtonBackGroundColor(backgroudColor: .gray)
+    }
+    
+    @IBAction func checkAmout(_ sender: Any) {
+        let amount = textField.getAmount()
+        print(amount)
     }
 }
 

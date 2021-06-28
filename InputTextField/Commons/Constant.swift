@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct Constans {
+struct Constant {
     static let PRICE_LOCATION = "vn_VN"
     static let SYMBOL = "đ"
     static let BUTTON_CORNER_RADIUS: CGFloat = 5
